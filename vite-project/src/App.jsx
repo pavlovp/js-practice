@@ -1,41 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Table from "./Table";
 import "./App.css";
 
-const Items = ({ items, deleteAction }) => {
-  return (
-    <table id="itemsTable" style={{ border: "2px solid" }}>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {items.map((item) => (
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.email}</td>
-            <td>
-              <button
-                type="button"
-                onClick={() => {
-                  if (deleteAction) {
-                    deleteAction(item.id);
-                  }
-                }}
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-};
 
 function App() {
   const [formData, setFormData] = useState({
@@ -45,9 +11,18 @@ function App() {
 
   const [items, setItems] = useState([]);
 
+
+  useEffect(() => {
+    let savedItems = window.localStorage.getItem('entries');
+    if (savedItems) {
+      const arr = JSON.parse(savedItems)
+      setItems(arr)
+    }
+  }, [])
+
   const deleteItem = (id) => {
     const newItems = items.filter((item) => item.id != id);
-    setItems(...newItems);
+    setItems([...newItems]);
   };
 
   const handleChange = (e) => {
@@ -59,17 +34,23 @@ function App() {
     e.preventDefault();
     const data = formData;
     data.id = Math.floor(Math.random() * 10000);
-    setItems((prevItems) => [...prevItems, { ...data }]); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    setItems((prevItems) => {
+      const newItems = [...prevItems, { ...data }]; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      const str = JSON.stringify(newItems)
+      window.localStorage.setItem('entries', str)
+      return newItems
+    })
+
 
     window.items = items;
   };
 
   return (
     <>
-      <div>
+      <div className="appContainer">
         <h1>FORM</h1>
         <form onSubmit={handleSubmit}>
-          <div>
+          <div className="formGroup">
             <label htmlFor="name">Name</label>
             <input type="text" id="name" onInput={handleChange}></input>
 
@@ -80,7 +61,7 @@ function App() {
           </div>
         </form>
 
-        <Items items={items} deleteAction={deleteItem}></Items>
+        <Table items={items} deleteAction={deleteItem}></Table>
       </div>
     </>
   );
