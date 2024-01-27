@@ -1,66 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simple List</title>
 
     <style>
-        .todoitem {
-            display: flex;
-            justify-content: space-between;
-        }
+      .todoitem {
+        display: flex;
+        justify-content: space-between;
+      }
     </style>
     <script type="module" src="./table/dom.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav>
-        <a href="#todoPage">Entries</a>
-        <a href="#galleryPage">Gallery</a>
-
+      <a href="#todoPage">Entries</a>
+      <a href="#galleryPage">Gallery</a>
     </nav>
     <div id="todoPage" class="page">
-        <h1>Todo List</h1>
-        <div>
-            <label>
-                Filter
-                <input type="text" id="nameFilter">
-            </label>
-        </div>
+      <h1>Todo List</h1>
+      <div>
+        <label>
+          Filter
+          <input type="text" id="nameFilter" />
+        </label>
+      </div>
 
+      <input type="text" id="nameInput" placeholder="Name" />
+      <span id="nameError" style="color: red">Required</span>
 
-        <input type="text" id="nameInput" placeholder="Name">
-        <span id='nameError' style="color: red">Required</span>
+      <input type="text" id="phoneInput" placeholder="Phone number" />
+      <span id="phoneError" style="color: red">Required</span>
 
+      <label for="sexInput">Sex:</label>
+      <select id="sexInput">
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
 
-        <input type="text" id="phoneInput" placeholder="Phone number">
-        <span id='phoneError' style="color: red">Required</span>
+      <button id="addBtn">Add Entry</button>
 
-        <label for="sexInput">Sex:</label>
-        <select id="sexInput">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
-        </select>
-
-        <button id="addBtn">Add Entry</button>
-
-        <table border="1" id="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Sex</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="tbody">
-            </tbody>
-        </table>
+      <table border="1" id="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Sex</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
     </div>
     <div id="galleryPage" class="page">Second page</div>
-</body>
-
+  </body>
 </html>
