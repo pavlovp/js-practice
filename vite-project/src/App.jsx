@@ -22,7 +22,10 @@ function App() {
 
   const deleteItem = (id) => {
     const newItems = items.filter((item) => item.id != id);
-    setItems([...newItems]);
+    newItems = [...newItems]
+    const str = JSON.stringify(newItems)
+    window.localStorage.setItem('entries', str)
+    setItems(newItems)
   };
 
   const handleChange = (e) => {
@@ -36,11 +39,11 @@ function App() {
     data.id = Math.floor(Math.random() * 10000);
     setItems((prevItems) => {
       const newItems = [...prevItems, { ...data }]; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
       const str = JSON.stringify(newItems)
       window.localStorage.setItem('entries', str)
       return newItems
     })
-
 
     window.items = items;
   };
