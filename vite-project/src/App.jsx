@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Table from "./Table";
 import "./App.css";
+import getData from './getData'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -11,20 +12,19 @@ function App() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    let savedItems = window.localStorage.getItem("entries");
-    if (savedItems) {
-      const arr = JSON.parse(savedItems);
-      setItems(arr);
+    const fetchData = async () => {
+      const data = await getData()
+      setItems(data)
     }
-  }, []);
+    fetchData()
+  }, [])
 
   const deleteItem = (id) => {
     let newItems = items.filter((item) => item.id != id);
-
-    newItems = [...newItems];
-    const str = JSON.stringify(newItems);
-    window.localStorage.setItem("entries", str);
-    setItems(newItems);
+    newItems = [...newItems]
+    const str = JSON.stringify(newItems)
+    window.localStorage.setItem('entries', str)
+    setItems(newItems)
   };
 
   const handleChange = (e) => {
